@@ -1,5 +1,6 @@
 package com.example.application.views;
 
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
@@ -47,8 +48,8 @@ public class ReceiptView extends VerticalLayout {
             showReceipt(receipt);
             upload.clearFileList();
         });
-
-        add(upload);
+        Text instructions = new Text("Upload an image of a receipt. The AI will extract the details and show them below.");
+        add(instructions, upload);
     }
 
     private void showReceipt(Receipt receipt) {
