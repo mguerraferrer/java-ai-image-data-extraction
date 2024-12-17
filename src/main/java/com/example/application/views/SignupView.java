@@ -21,9 +21,11 @@ import java.util.List;
 @Menu(title = "Signup", order = 2)
 public class SignupView extends VerticalLayout {
 
-    public record Participant(String name, String company, String email, String tshirtSize) { }
+    public record Participant(String name, String company, String email, String tshirtSize) {
+    }
 
-    public record SignUpSheet(List<Participant> participants) { }
+    public record SignUpSheet(List<Participant> participants) {
+    }
 
     private final GridPro<Participant> grid = new GridPro<>();
 
@@ -42,8 +44,8 @@ public class SignupView extends VerticalLayout {
             var signUpSheet = client.prompt()
                 .user(userMessage -> userMessage
                     .text("""
-                          Please read the attached event signup sheet image and extract all participants.
-                          """)
+                        Please read the attached event signup sheet image and extract all participants.
+                        """)
                     .media(
                         MimeTypeUtils.parseMimeType(e.getMIMEType()),
                         new InputStreamResource(buffer.getInputStream())
