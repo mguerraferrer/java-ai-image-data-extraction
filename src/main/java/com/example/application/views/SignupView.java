@@ -1,7 +1,7 @@
 package com.example.application.views;
 
 import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.gridpro.GridPro;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.upload.Upload;
@@ -27,7 +27,7 @@ public class SignupView extends VerticalLayout {
     public record SignUpSheet(List<Participant> participants) {
     }
 
-    private final GridPro<Participant> grid = new GridPro<>();
+    private final Grid<Participant> grid = new Grid<>();
 
     private List<Participant> participants = new ArrayList<>();
 
@@ -69,31 +69,26 @@ public class SignupView extends VerticalLayout {
         grid.setSizeFull();
         grid.setItems(participants);
         grid.setAllRowsVisible(true);
-        grid.setEditOnClick(true);
 
-        grid.addEditColumn(Participant::name)
-            .text((participant, newValue) -> updateParticipant(participant, newValue, participant.company(), participant.email(), participant.tshirtSize()))
-            .setHeader("Name")
-            .setSortable(true)
-            .setAutoWidth(true);
+        grid.addColumn(Participant::name)
+                .setHeader("Name")
+                .setSortable(true)
+                .setAutoWidth(true);
 
-        grid.addEditColumn(Participant::company)
-            .text((participant, newValue) -> updateParticipant(participant, participant.name(), newValue, participant.email(), participant.tshirtSize()))
-            .setHeader("Company")
-            .setSortable(true)
-            .setAutoWidth(true);
+        grid.addColumn(Participant::company)
+                .setHeader("Company")
+                .setSortable(true)
+                .setAutoWidth(true);
 
-        grid.addEditColumn(Participant::email)
-            .text((participant, newValue) -> updateParticipant(participant, participant.name(), participant.company(), newValue, participant.tshirtSize()))
-            .setHeader("Email")
-            .setSortable(true)
-            .setAutoWidth(true);
+        grid.addColumn(Participant::email)
+                .setHeader("Email")
+                .setSortable(true)
+                .setAutoWidth(true);
 
-        grid.addEditColumn(Participant::tshirtSize)
-            .text((participant, newValue) -> updateParticipant(participant, participant.name(), participant.company(), participant.email(), newValue))
-            .setHeader("T-Shirt Size")
-            .setSortable(true)
-            .setAutoWidth(true);
+        grid.addColumn(Participant::tshirtSize)
+                .setHeader("T-Shirt Size")
+                .setSortable(true)
+                .setAutoWidth(true);
 
         gridContainer.add(grid);
         return gridContainer;
@@ -106,15 +101,4 @@ public class SignupView extends VerticalLayout {
         }
     }
 
-    private void updateParticipant(Participant oldParticipant, String name, String company, String email, String tshirtSize) {
-        // Create a new Participant with updated fields
-        Participant updated = new Participant(name, company, email, tshirtSize);
-
-        // Replace the old participant in the list
-        int index = participants.indexOf(oldParticipant);
-        if (index >= 0) {
-            participants.set(index, updated);
-            grid.setItems(participants);
-        }
-    }
 }
